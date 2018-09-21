@@ -94,7 +94,7 @@ class Monster(Entity):
 class Hero(Entity):
     def __init__(self, id, type, x, y, shieldlife, isControl):
         Entity.__init__(self, id, type, x, y, shieldlife, isControl)
-        self.strategy = Tank()
+        self.strategy = None
 
     def manaGainedOutOfBox(self):
         return 0

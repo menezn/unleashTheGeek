@@ -1,15 +1,49 @@
 import sys
 import math
 
+from entity import *
+from board import *
+
+def setUpBoard():
+    base_x, base_y = [int(i) for i in input().split()]
+    heroes_per_player = int(input())
+
+    playerData  = []
+    monsterData = []
+    heroData    = []
+    enemyData   = []
+
+    for i in range(2):
+        playerData.append([int(j) for j in input().split()])
+
+    entity_count = int(input())
+
+    for i in range(entity_count):
+        current = [int(j) for j in input().split()]
+        if current[1] == 0:
+            monsterData.append(Monster(current[0],current[1],current[2],current[3],current[4],current[5],current[6],current[7],current[8],current[9],current[10]))
+        if current[1] == 1:
+            heroData.append(Hero(current[0],current[1],current[2],current[3],current[4],current[5]))
+        if current[1] == 2:
+            enemyData.append(Enemy(current[0],current[1],current[2],current[3],current[4],current[5]))
+
+    return BoardState(base_x,base_y,heroes_per_player,playerData[0],playerData[1],monsterData,heroData,enemyData,entity_count)
+
 # Board State Class
 class BoardState:
-    def __init__(self,PlayerData,EnemyData,Monsters,Heros,Enemies,EntityCount):
+    def __init__(self,base_x,base_y,numHeroes,PlayerData,EnemyData,Monsters,Heros,Enemies,EntityCount):
+
+        self.base_x = base_x
+        self.base_y = base_y
+        self.herosNum = numHeroes
+
         self.player      = [x for x in PlayerData]
         self.enemy       = [x for x in EnemyData]
         self.entities    = [{x.id : x for x in Monsters}, [x for x in Heros], {x.id : x for x in Enemies}]
         self.numEntity = EntityCount
 
-
+    def setHeroStrategy(self,num,strategy):
+        self.entities[1][num].strategy = strategy
     def value(self):
         return 0
 

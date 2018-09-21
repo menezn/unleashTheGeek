@@ -12,15 +12,20 @@ from board import *
 from action import *
 
 # Global Variables
-base_x, base_y = [int(i) for i in input().split()]
-heroes_per_player = int(input())
 sqrtTwo = 2**.5
 
 # game loop
 while True:
     currentState = setUpBoard()
     print(str(currentState))#, file=sys.stderr)
-    for i in range(heroes_per_player):
+    for i in range(currentState.herosNum):
+        if i == 0:
+            currentState.setHeroStrategy(i,Tank())
+        if i == 1:
+            currentState.setHeroStrategy(i,Tank())
+        if i == 2:
+            currentState.setHeroStrategy(i,SpellCaster())
+
         moves = currentState.generateHeroMoves(i)
         print("Turns: " + str(len(moves)) + "\n")
         for move in moves:
